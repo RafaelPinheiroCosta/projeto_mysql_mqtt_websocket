@@ -21,22 +21,21 @@ public class MenuPrincipal {
                 2. Gerenciar Horários
                 0. Sair
                 """;
-
-        while (true) {
+        String opcao;
+        do {
 
             System.out.print(menuPrincipal);
-            String opcao = scanner.nextLine();
+            opcao = scanner.nextLine();
 
             switch (opcao) {
                 case "1" -> usuarioView.menu();
                 case "2" -> horarioView.menu();
                 case "0" -> {
                     System.out.println("Saindo...");
-                    return;
                 }
                 default -> System.out.println("Opção inválida.");
             }
-        }
+        }while (!opcao.equals("0"));
     }
 }
 

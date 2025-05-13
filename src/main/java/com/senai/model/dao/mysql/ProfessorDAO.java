@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public class ProfessorDAO  {
 
-
     public void inserir(Professor professor) {
         try (Connection conn = ConexaoMySQL.conectar()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO professor (nome, disciplina) VALUES (?, ?)");
@@ -20,7 +19,6 @@ public class ProfessorDAO  {
             e.printStackTrace();
         }
     }
-
 
     public void atualizar(Professor professor) {
         try (Connection conn = ConexaoMySQL.conectar()) {
@@ -33,7 +31,6 @@ public class ProfessorDAO  {
             e.printStackTrace();
         }
     }
-
 
     public void remover(int id) {
         try (Connection conn = ConexaoMySQL.conectar()) {
@@ -62,7 +59,6 @@ public class ProfessorDAO  {
         }
         return Optional.empty();
     }
-
 
     public List<Professor> listarTodos() {
         List<Professor> lista = new ArrayList<>();
