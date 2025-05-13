@@ -1,5 +1,5 @@
 package com.senai.controller;
-import com.senai.model.dao.HorarioDAO;
+import com.senai.model.dao.json.HorarioDAO;
 import com.senai.model.Horario;
 
 import java.time.LocalTime;

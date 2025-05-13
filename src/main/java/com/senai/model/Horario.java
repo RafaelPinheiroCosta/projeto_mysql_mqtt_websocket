@@ -29,4 +29,20 @@ public class Horario {
     public LocalTime getHoraInicio() {
         return horaInicio;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIdAluno(int idAluno) {
+        this.idAluno = idAluno;
+    }
+
+    public void setIdProfessor(int idProfessor) {
+        this.idProfessor = idProfessor;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
 }

@@ -1,8 +1,8 @@
 package com.senai.controller;
 
-import com.senai.model.dao.AlunoDAO;
-import com.senai.model.dao.HorarioDAO;
-import com.senai.model.dao.ProfessorDAO;
+import com.senai.model.dao.json.AlunoDAO;
+import com.senai.model.dao.json.HorarioDAO;
+import com.senai.model.dao.json.ProfessorDAO;
 import com.senai.model.Aluno;
 import com.senai.model.Horario;
 import com.senai.model.Professor;

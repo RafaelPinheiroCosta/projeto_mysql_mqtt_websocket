@@ -1,4 +1,4 @@
-package com.senai.model.dao;
+package com.senai.model.dao.mysql;
 
 import com.senai.model.Professor;
 
