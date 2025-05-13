@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class HorarioDAO {
+
+
+
     public void inserir(Horario horario) {
         try (Connection conn = ConexaoMySQL.conectar()) {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO horario (id_aluno, id_professor, hora_inicio) VALUES (?, ?, ?)");

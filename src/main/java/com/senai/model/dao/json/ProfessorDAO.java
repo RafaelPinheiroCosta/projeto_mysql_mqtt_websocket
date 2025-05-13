@@ -13,6 +13,11 @@ import java.util.*;
 public class ProfessorDAO {
     private final String caminho = "professores.json";
     private final Gson gson = new Gson();
+    private final List<Professor> professores;
+
+    public ProfessorDAO(){
+        professores = carregar();
+    }
 
     private List<Professor> carregar() {
         try (FileReader reader = new FileReader(caminho)) {
@@ -32,28 +37,26 @@ public class ProfessorDAO {
     }
 
     public void inserir(Professor professor) {
-        List<Professor> lista = carregar();
-        int novoId = lista.stream().mapToInt(Professor::getId).max().orElse(0) + 1;
+
+        int novoId = professores.stream().mapToInt(Professor::getId).max().orElse(0) + 1;
         professor.setId(novoId);
-        lista.add(professor);
-        salvar(lista);
+        professores.add(professor);
+        salvar(professores);
     }
 
     public void atualizar(Professor professor) {
-        List<Professor> lista = carregar();
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getId() == professor.getId()) {
-                lista.set(i, professor);
+        for (int i = 0; i < professores.size(); i++) {
+            if (professores.get(i).getId() == professor.getId()) {
+                professores.set(i, professor);
                 break;
             }
         }
-        salvar(lista);
+        salvar(professores);
     }
 
     public void remover(int id) {
-        List<Professor> lista = carregar();
-        lista.removeIf(p -> p.getId() == id);
-        salvar(lista);
+        professores.removeIf(p -> p.getId() == id);
+        salvar(professores);
     }
 
     public Optional<Professor> buscarPorId(int id) {
@@ -61,7 +64,7 @@ public class ProfessorDAO {
     }
 
     public List<Professor> listarTodos() {
-        return carregar();
+        return professores;
     }
 }
 

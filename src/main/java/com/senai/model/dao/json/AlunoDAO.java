@@ -13,6 +13,11 @@ import java.util.*;
 public class AlunoDAO {
     private final String caminho = "alunos.json";
     private final Gson gson = new Gson();
+    private final List<Aluno> alunos;
+
+    public AlunoDAO(){
+        alunos = carregar();
+    }
 
     private List<Aluno> carregar() {
         try (FileReader reader = new FileReader(caminho)) {
@@ -32,40 +37,37 @@ public class AlunoDAO {
     }
 
     public void inserir(Aluno aluno) {
-        List<Aluno> lista = carregar();
-        int novoId = lista.stream().mapToInt(Aluno::getId).max().orElse(0) + 1;
+        int novoId = alunos.stream().mapToInt(Aluno::getId).max().orElse(0) + 1;
         aluno.setId(novoId);
-        lista.add(aluno);
-        salvar(lista);
+        alunos.add(aluno);
+        salvar(alunos);
     }
 
     public void atualizar(Aluno aluno) {
-        List<Aluno> lista = carregar();
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getId() == aluno.getId()) {
-                lista.set(i, aluno);
+        for (int i = 0; i < alunos.size(); i++) {
+            if (alunos.get(i).getId() == aluno.getId()) {
+                alunos.set(i, aluno);
                 break;
             }
         }
-        salvar(lista);
+        salvar(alunos);
     }
 
     public void remover(int id) {
-        List<Aluno> lista = carregar();
-        lista.removeIf(a -> a.getId() == id);
-        salvar(lista);
+        alunos.removeIf(a -> a.getId() == id);
+        salvar(alunos);
     }
 
     public Optional<Aluno> buscarPorId(int id) {
-        return carregar().stream().filter(a -> a.getId() == id).findFirst();
+        return alunos.stream().filter(a -> a.getId() == id).findFirst();
     }
 
     public Optional<Aluno> buscarPorRfid(String rfid) {
-        return carregar().stream().filter(a -> rfid.equals(a.getIdCartaoRfid())).findFirst();
+        return alunos.stream().filter(a -> rfid.equals(a.getIdCartaoRfid())).findFirst();
     }
 
     public List<Aluno> listarTodos() {
-        return carregar();
+        return alunos;
     }
 }
 

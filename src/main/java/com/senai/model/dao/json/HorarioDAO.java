@@ -17,6 +17,11 @@ public class HorarioDAO {
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
             .create();
+    private final List<Horario> horarios;
+
+    public HorarioDAO(){
+        horarios = carregar();
+    }
 
     private List<Horario> carregar() {
         try (FileReader reader = new FileReader(caminho)) {
@@ -36,36 +41,33 @@ public class HorarioDAO {
     }
 
     public void inserir(Horario horario) {
-        List<Horario> lista = carregar();
-        int novoId = lista.stream().mapToInt(Horario::getId).max().orElse(0) + 1;
+        int novoId = horarios.stream().mapToInt(Horario::getId).max().orElse(0) + 1;
         horario.setId(novoId);
-        lista.add(horario);
-        salvar(lista);
+        horarios.add(horario);
+        salvar(horarios);
     }
 
     public void atualizar(Horario horario) {
-        List<Horario> lista = carregar();
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getId() == horario.getId()) {
-                lista.set(i, horario);
+        for (int i = 0; i < horarios.size(); i++) {
+            if (horarios.get(i).getId() == horario.getId()) {
+                horarios.set(i, horario);
                 break;
             }
         }
-        salvar(lista);
+        salvar(horarios);
     }
 
     public void remover(int id) {
-        List<Horario> lista = carregar();
-        lista.removeIf(h -> h.getId() == id);
-        salvar(lista);
+        horarios.removeIf(h -> h.getId() == id);
+        salvar(horarios);
     }
 
     public Optional<Horario> buscarHorarioDoAluno(int idAluno) {
-        return carregar().stream().filter(h -> h.getIdAluno() == idAluno).findFirst();
+        return horarios.stream().filter(h -> h.getIdAluno() == idAluno).findFirst();
     }
 
     public List<Horario> listarTodos() {
-        return carregar();
+        return horarios;
     }
 }
 
