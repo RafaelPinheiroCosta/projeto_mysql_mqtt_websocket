@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Professor - Teste WebSocket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #333;
+        }
+        #mensagens {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+        }
+        .msg {
+            margin: 5px 0;
+            padding: 6px;
+            background-color: #e6f7ff;
+            border-left: 4px solid #1890ff;
+        }
+        .erro {
+            color: red;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<h1>Mensagens Recebidas via WebSocket</h1>
+<div id="mensagens"></div>
+<p class="erro" id="status"></p>
+
+<script>
+    const status = document.getElementById("status");
+    const div = document.getElementById("mensagens");
+
+    let ws;
+
+    function conectarWebSocket() {
+        try {
+            ws = new WebSocket("ws://localhost:8080/ws");
+
+            ws.onopen = () => {
+                status.textContent = "Conectado com sucesso!";
+                status.style.color = 'green';
+            };
+
+            ws.onmessage = (event) => {
+                const p = document.createElement("div");
+                p.classList.add("msg");
+                p.textContent = event.data;
+                div.appendChild(p);
+                div.scrollTop = div.scrollHeight;
+            };
+
+            ws.onerror = (err) => {
+                status.textContent = "Erro na conexão WebSocket.";
+            };
+
+            ws.onclose = () => {
+                status.textContent = "Conexão encerrada. Tentando reconectar...";
+                setTimeout(conectarWebSocket, 3000);
+            };
+            setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.send("ping");
+                }
+            }, 20000);
+
+        } catch (e) {
+            status.textContent = "Erro inesperado: " + e.message;
+        }
+    }
+
+    conectarWebSocket();
+</script>
+</body>
+</html>

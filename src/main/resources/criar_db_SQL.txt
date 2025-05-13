@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS controle_atrasos;
+USE controle_atrasos;
+
+CREATE TABLE aluno (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    id_cartao VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE professor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    disciplina VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE horario (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_aluno INT,
+    id_professor INT,
+    hora_inicio TIME NOT NULL,
+    FOREIGN KEY (id_aluno) REFERENCES aluno(id),
+    FOREIGN KEY (id_professor) REFERENCES professor(id)
+);
