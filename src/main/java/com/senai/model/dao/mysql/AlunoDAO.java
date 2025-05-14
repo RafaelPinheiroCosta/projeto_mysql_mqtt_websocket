@@ -10,11 +10,13 @@ import java.util.Optional;
 public class AlunoDAO {
 
     public void inserir(Aluno aluno) {
-        String sql = "INSERT INTO aluno (nome, id_cartao) VALUES (?, ?)";
+        String sql = "INSERT INTO aluno (nome, login, senha, id_cartao) VALUES (?, ?,?,?)";
         try (Connection conn = ConexaoMySQL.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, aluno.getNome());
-            stmt.setString(2, aluno.getIdCartaoRfid());
+            stmt.setString(2, aluno.getLogin());
+            stmt.setString(3, aluno.getSenha());
+            stmt.setString(4, aluno.getIdCartaoRfid());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,12 +24,14 @@ public class AlunoDAO {
     }
 
     public void atualizar(Aluno aluno) {
-        String sql = "UPDATE aluno SET nome = ?, id_cartao = ? WHERE id = ?";
+        String sql = "UPDATE aluno SET nome = ?,login = ?,senha = ?, id_cartao = ? WHERE id = ?";
         try (Connection conn = ConexaoMySQL.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, aluno.getNome());
-            stmt.setString(2, aluno.getIdCartaoRfid());
-            stmt.setInt(3, aluno.getId());
+            stmt.setString(2, aluno.getLogin());
+            stmt.setString(3, aluno.getSenha());
+            stmt.setString(4, aluno.getIdCartaoRfid());
+            stmt.setInt(5, aluno.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,7 +98,9 @@ public class AlunoDAO {
         return new Aluno(
                 rs.getInt("id"),
                 rs.getString("nome"),
-                rs.getString("id_cartao")
+                rs.getString("id_cartao"),
+                rs.getString("login"),
+                rs.getString("senha")
         );
     }
 }

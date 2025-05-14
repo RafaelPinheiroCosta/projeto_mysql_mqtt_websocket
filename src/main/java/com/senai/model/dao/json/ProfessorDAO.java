@@ -2,6 +2,7 @@ package com.senai.model.dao.json;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.senai.model.Administrador;
 import com.senai.model.Professor;
 
 import java.io.FileReader;
@@ -61,6 +62,10 @@ public class ProfessorDAO {
 
     public Optional<Professor> buscarPorId(int id) {
         return carregar().stream().filter(p -> p.getId() == id).findFirst();
+    }
+
+    public Optional<Professor> buscarPorLogin(String login) {
+        return professores.stream().filter(a -> a.getLogin().equals(login)).findFirst();
     }
 
     public List<Professor> listarTodos() {

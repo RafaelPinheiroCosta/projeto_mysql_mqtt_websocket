@@ -11,9 +11,11 @@ public class ProfessorDAO  {
 
     public void inserir(Professor professor) {
         try (Connection conn = ConexaoMySQL.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO professor (nome, disciplina) VALUES (?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO professor (nome,login, senha disciplina) VALUES (?, ?, ?, ?)");
             stmt.setString(1, professor.getNome());
-            stmt.setString(2, professor.getDisciplina());
+            stmt.setString(2, professor.getLogin());
+            stmt.setString(3, professor.getSenha());
+            stmt.setString(4, professor.getDisciplina());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,10 +24,12 @@ public class ProfessorDAO  {
 
     public void atualizar(Professor professor) {
         try (Connection conn = ConexaoMySQL.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE professor SET nome = ?, disciplina = ? WHERE id = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE professor SET nome = ?,login = ?,senha = ?, disciplina = ? WHERE id = ?");
             stmt.setString(1, professor.getNome());
-            stmt.setString(2, professor.getDisciplina());
-            stmt.setInt(3, professor.getId());
+            stmt.setString(2, professor.getLogin());
+            stmt.setString(3, professor.getSenha());
+            stmt.setString(4, professor.getDisciplina());
+            stmt.setInt(5, professor.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,6 +55,8 @@ public class ProfessorDAO  {
                 return Optional.of(new Professor(
                         rs.getInt("id"),
                         rs.getString("nome"),
+                        rs.getString("login"),
+                        rs.getString("senha"),
                         rs.getString("disciplina")
                 ));
             }
@@ -69,7 +75,9 @@ public class ProfessorDAO  {
                 lista.add(new Professor(
                         rs.getInt("id"),
                         rs.getString("nome"),
-                        rs.getString("disciplina")
+                        rs.getString("disciplina"),
+                        rs.getString("login"),
+                        rs.getString("senha")
                 ));
             }
         } catch (SQLException e) {

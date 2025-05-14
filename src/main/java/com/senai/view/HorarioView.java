@@ -57,7 +57,7 @@ public class HorarioView {
         System.out.println(controller.removerHorario(id));
     }
 
-    private void listar() {
+    public void listar() {
         for (Horario h : controller.listarHorarios()) {
             System.out.printf("ID: %d | Aluno ID: %d | Professor ID: %d | Início: %s\n",
                     h.getId(), h.getIdAluno(), h.getIdProfessor(), h.getHoraInicio());

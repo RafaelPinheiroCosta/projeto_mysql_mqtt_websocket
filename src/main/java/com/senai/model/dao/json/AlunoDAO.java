@@ -2,6 +2,7 @@ package com.senai.model.dao.json;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.senai.model.Administrador;
 import com.senai.model.Aluno;
 
 import java.io.FileReader;
@@ -64,6 +65,9 @@ public class AlunoDAO {
 
     public Optional<Aluno> buscarPorRfid(String rfid) {
         return alunos.stream().filter(a -> rfid.equals(a.getIdCartaoRfid())).findFirst();
+    }
+    public Optional<Aluno> buscarPorLogin(String login) {
+        return alunos.stream().filter(a -> a.getLogin().equals(login)).findFirst();
     }
 
     public List<Aluno> listarTodos() {
