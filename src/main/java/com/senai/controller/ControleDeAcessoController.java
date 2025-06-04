@@ -27,7 +27,14 @@ public class ControleDeAcessoController {
         }
 
         Aluno aluno = alunoOpt.get();
-        Optional<Horario> horarioOpt = horarioDAO.buscarHorarioDoAluno(aluno.getId());
+
+        Optional<Turma> turmaOpt = turmaDAO.buscarPorAluno(aluno);
+
+        if (turmaOpt.isEmpty()) {
+            return "[ACESSO] Aluno: " + aluno.getNome() + " - Nenhuma turma atribuída.";
+        }
+
+        Optional<Horario> horarioOpt = horarioDAO.buscarHorarioDaTurma(turmaOpt.get().getId());
 
         if (horarioOpt.isEmpty()) {
             return "[ACESSO] Aluno: " + aluno.getNome() + " - Nenhum horário atribuído.";
@@ -35,11 +42,6 @@ public class ControleDeAcessoController {
 
         Horario horario = horarioOpt.get();
 
-        Optional<Turma> turmaOpt = turmaDAO.buscarPorAluno(aluno);
-
-        if (turmaOpt.isEmpty()) {
-            return "[ACESSO] Aluno: " + aluno.getNome() + " - Nenhuma turma atribuída.";
-        }
         LocalTime horarioEntrada = turmaOpt.get().getHorarioEntrada();
         int tolerancia = turmaOpt.get().getCurso().getTolerancia();
 
@@ -54,7 +56,6 @@ public class ControleDeAcessoController {
             });
             return "[ATRASO DETECTADO] Aluno: " + aluno.getNome();
         }
-
         return "[ENTRADA AUTORIZADA] Aluno: " + aluno.getNome();
     }
 }

@@ -63,8 +63,8 @@ public class HorarioDAO {
         salvar(horarios);
     }
 
-    public Optional<Horario> buscarHorarioDoAluno(int idAluno) {
-        return horarios.stream().filter(h -> h.getIdTurma() == idAluno).findFirst();
+    public Optional<Horario> buscarHorarioDaTurma(int idTurma) {
+        return horarios.stream().filter(h -> h.getIdTurma() == idTurma).findFirst();
     }
 
     public List<Horario> listarTodos() {
