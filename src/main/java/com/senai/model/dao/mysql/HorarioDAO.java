@@ -12,10 +12,9 @@ public class HorarioDAO {
 
     public void inserir(Horario horario) {
         try (Connection conn = ConexaoMySQL.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO horario (id_aluno, id_professor, hora_inicio) VALUES (?, ?, ?)");
-            stmt.setInt(1, horario.getIdAluno());
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO horario (id_aluno, id_professor) VALUES (?, ?)");
+            stmt.setInt(1, horario.getIdTurma());
             stmt.setInt(2, horario.getIdProfessor());
-            stmt.setTime(3, Time.valueOf(horario.getHoraInicio()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -24,11 +23,10 @@ public class HorarioDAO {
 
     public void atualizar(Horario horario) {
         try (Connection conn = ConexaoMySQL.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement("UPDATE horario SET id_aluno = ?, id_professor = ?, hora_inicio = ? WHERE id = ?");
-            stmt.setInt(1, horario.getIdAluno());
+            PreparedStatement stmt = conn.prepareStatement("UPDATE horario SET id_aluno = ?, id_professor = ? WHERE id = ?");
+            stmt.setInt(1, horario.getIdTurma());
             stmt.setInt(2, horario.getIdProfessor());
-            stmt.setTime(3, Time.valueOf(horario.getHoraInicio()));
-            stmt.setInt(4, horario.getId());
+            stmt.setInt(3, horario.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,8 +52,7 @@ public class HorarioDAO {
                 return Optional.of(new Horario(
                         rs.getInt("id"),
                         rs.getInt("id_aluno"),
-                        rs.getInt("id_professor"),
-                        rs.getTime("hora_inicio").toLocalTime()
+                        rs.getInt("id_professor")
                 ));
             }
         } catch (SQLException e) {
@@ -73,8 +70,7 @@ public class HorarioDAO {
                 lista.add(new Horario(
                         rs.getInt("id"),
                         rs.getInt("id_aluno"),
-                        rs.getInt("id_professor"),
-                        rs.getTime("hora_inicio").toLocalTime()
+                        rs.getInt("id_professor")
                 ));
             }
         } catch (SQLException e) {

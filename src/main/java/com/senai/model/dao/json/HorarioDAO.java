@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.senai.model.Horario;
+import com.senai.util.LocalTimeAdapter;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -63,7 +64,7 @@ public class HorarioDAO {
     }
 
     public Optional<Horario> buscarHorarioDoAluno(int idAluno) {
-        return horarios.stream().filter(h -> h.getIdAluno() == idAluno).findFirst();
+        return horarios.stream().filter(h -> h.getIdTurma() == idAluno).findFirst();
     }
 
     public List<Horario> listarTodos() {

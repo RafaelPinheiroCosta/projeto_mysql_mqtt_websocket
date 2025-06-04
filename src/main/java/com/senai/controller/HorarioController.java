@@ -8,13 +8,13 @@ import java.util.List;
 public class HorarioController {
     private final HorarioDAO horarioDAO = new HorarioDAO();
 
-    public String cadastrarHorario(int idAluno, int idProfessor, LocalTime hora) {
-        horarioDAO.inserir(new Horario(0, idAluno, idProfessor, hora));
+    public String cadastrarHorario(int idTurma, int idProfessor) {
+        horarioDAO.inserir(new Horario(0, idTurma, idProfessor));
         return "Horário cadastrado.";
     }
 
-    public String atualizarHorario(int id, int idAluno, int idProfessor, LocalTime hora) {
-        horarioDAO.atualizar(new Horario(id, idAluno, idProfessor, hora));
+    public String atualizarHorario(int id, int idAluno, int idProfessor) {
+        horarioDAO.atualizar(new Horario(id, idAluno, idProfessor));
         return "Horário atualizado.";
     }
 

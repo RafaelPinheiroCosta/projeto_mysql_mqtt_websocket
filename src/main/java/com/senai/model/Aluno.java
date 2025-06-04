@@ -5,7 +5,6 @@ import java.time.LocalTime;
 public class Aluno extends Usuario {
     private String idCartaoRfid;
 
-
     public Aluno(int id, String nome, String idCartaoRfid, String login, String senha) {
         super(id, nome, login, senha);
         this.idCartaoRfid = idCartaoRfid;
@@ -19,8 +18,8 @@ public class Aluno extends Usuario {
         this.idCartaoRfid = idCartaoRfid;
     }
 
-    public boolean estaAtrasado(LocalTime horarioEntrada) {
-        return LocalTime.now().isAfter(horarioEntrada.plusMinutes(5));
+    public boolean estaAtrasado(LocalTime horarioEntrada, int tolerancia) {
+        return LocalTime.now().isAfter(horarioEntrada.plusMinutes(tolerancia));
     }
 
     @Override

@@ -41,7 +41,10 @@ public class MenuPrincipal {
             case "Administrador" -> menuAdministrador((Administrador) usuario);
             case "Professor"     -> menuProfessor((Professor) usuario);
             case "Aluno"         -> menuAluno((Aluno) usuario);
-            default -> System.out.println("Tipo de usuário desconhecido.");
+            default -> {
+                System.out.println("Tipo de usuário desconhecido.");
+                logar();
+            }
         }
     }
 
@@ -62,7 +65,10 @@ public class MenuPrincipal {
                     System.out.println("Saindo...");
                     System.exit(0);
                 }
-                default  -> System.out.println("Opção inválida.");
+                default  -> {
+                    System.out.println("Opção inválida.");
+                    menuAdministrador(administrador);
+                }
             }
         });
     }
@@ -91,7 +97,10 @@ public class MenuPrincipal {
                     WebSocketClienteConsole.desconectar();
                     System.exit(0);
                 }
-                default  -> System.out.println("Opção inválida.");
+                default  -> {
+                    System.out.println("Opção inválida.");
+                    menuProfessor(professor);
+                }
             }
         });
     }
@@ -117,7 +126,10 @@ public class MenuPrincipal {
                     System.out.println("Saindo...");
                     System.exit(0);
                 }
-                default  -> System.out.println("Opção inválida.");
+                default  -> {
+                    System.out.println("Opção inválida.");
+                    menuAluno(aluno);
+                }
             }
         });
     }

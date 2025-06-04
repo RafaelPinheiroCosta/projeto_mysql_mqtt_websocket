@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class AdministradorDAO {
+public class
+AdministradorDAO {
     private final String caminho = "administradores.json";
     private final Gson gson = new Gson();
     private final List<Administrador> administradores;
